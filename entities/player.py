@@ -54,5 +54,4 @@ class bullet(entity):
     def out_of_window(self):
         if self.get_y + self.get_height <= 0:
             return True
-        
         return False
