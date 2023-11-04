@@ -1,17 +1,20 @@
+import pygame
+
 class entity(object):
     def __init__(self, position, size):
         self.position = position
         self.size = size
+        self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
 
     #return x pos of entity on window
     @property
     def get_x(self):
-        return self.position[0]
+        return self.rect.x
     
     #return y pos of entity on window
     @property
     def get_y(self):
-        return self.position[1]
+        return self.rect.y
     
     #return width of entity
     @property
@@ -24,7 +27,7 @@ class entity(object):
         return self.size[1]
     
     def set_x(self, x):
-        self.position[0] = x
+        self.rect.x = x
 
     def set_y(self, y):
-        self.position[1] = y
+        self.rect.y = y

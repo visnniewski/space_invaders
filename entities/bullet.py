@@ -12,11 +12,13 @@ class bullet(entity):
         self.set_y(position[1] - 10)
 
     def update(self):
+        #move bullet up
         self.set_y(self.get_y - 4)
 
     def draw(self):
-        pygame.draw.rect(self.window, (255, 255, 255), (self.get_x, self.get_y, self.get_width, self.get_height))
+        pygame.draw.rect(self.window, (46, 204, 113), self.rect)
 
+    #return True if bullet is out of window
     @property
     def out_of_window(self):
         if self.get_y + self.get_height <= 0:

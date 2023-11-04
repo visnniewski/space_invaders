@@ -1,5 +1,6 @@
 import pygame, sys
 from entities.player import player
+from entities.enemy import enemy
 
 class space_invaders:
     def __init__(self, window_size):
@@ -12,6 +13,8 @@ class space_invaders:
 
         #init player
         self.player = player(self.window, [0, 0], [30, 30])
+        self.enemies = []
+        self.create_enemies_fleet()
         
         #set player position
         self.player.set_x(self.window_size[0] / 2 - self.player.get_width / 2)
@@ -45,12 +48,31 @@ class space_invaders:
         sys.exit()
 
     def update(self):
-        self.player.update()
+        self.player.update(self.enemies)
+
+        #remove dead enemy from game
+        for enemy_destroyed in self.player.enemies_destroyed:
+            self.enemies.remove(enemy_destroyed)
+            self.player.enemies_destroyed.remove(enemy_destroyed)
+
+        #update all enemies
+        for enemy in self.enemies:
+            enemy.update()
 
     def draw(self):
         self.window.fill((0, 0, 0), (0, 0, self.window_size[0], self.window_size[1]))
         self.player.draw()
+
+        #draw all enemies
+        for enemy in self.enemies:
+            enemy.draw()
+
         pygame.display.update()
+
+    def create_enemies_fleet(self):
+        start_x = 36
+        for i in range(0, 10):
+            self.enemies.append(enemy(self.window, [start_x + 42 * i, 20], [30, 30]))
 
 if __name__ == "__main__":
     game = space_invaders((480, 360))
