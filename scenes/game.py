@@ -7,6 +7,8 @@ class game(object):
         self.window = window
         self.window_size = window_size
 
+        self.scene = "game"
+
         #init player
         self.player = player(self.window, self.window_size, [0, 0], [30, 30])
         self.enemies = []

@@ -11,11 +11,14 @@ class scene_manager(object):
         self.scene = self.scenes[self.scene_name]
 
     def change_scene(self, scene):
+        self.scene.scene = self.scene_name
         self.scene = self.scenes[scene]
         self.scene_name = scene
 
     def update(self):
         self.scene.update()
+        if self.scene.scene != self.scene_name:
+            self.change_scene(self.scene.scene)
 
     def draw(self):
         self.scene.draw()

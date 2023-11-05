@@ -43,6 +43,11 @@ class space_invaders:
                         can_shoot = False
                 if event.type == enemy_shoot and self.scene_manager.get_scene_name == "game":
                     self.scene_manager.scene.enemy_shoot()
+                if self.scene_manager.get_scene_name == "menu":
+                    if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
+                        self.scene_manager.scene.clicked = True
+                    else:
+                        self.scene_manager.scene.clicked = False
 
             #if statement to remove lag when closing window
             if self.running != False:
