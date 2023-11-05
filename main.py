@@ -58,6 +58,8 @@ class space_invaders:
     def draw(self):
         self.window.fill((0, 0, 0), (0, 0, self.window_size[0], self.window_size[1]))
 
+        pygame.draw.rect(self.window, (44, 62, 80), (0, 0, self.window_size[0], self.window_size[1]))
+
         self.scene_manager.draw()
 
         pygame.display.update()
