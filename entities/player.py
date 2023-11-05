@@ -9,10 +9,12 @@ class player(entity):
         self.window_size = window_size
         self.bullets = []
         self.enemies_destroyed = []
+        
+        self.speed = 3
 
     def shoot(self):
         #shoot bullets
-        self.bullets.append(bullet(self.window, self.window_size, (self.get_x, self.get_y), (4, self.get_height/2), self.get_width))
+        self.bullets.append(bullet(self.window, self.window_size, (self.get_x, self.get_y), self.get_width))
 
     def update(self, enemies):
         #get pygame pressed keys
@@ -20,10 +22,10 @@ class player(entity):
 
         #if key pressed left arrow move player to the left
         if keys[pygame.K_LEFT] and self.can_move("left"):
-            self.set_x(self.get_x - 2)
+            self.set_x(self.get_x - self.speed)
         #if key pressed right arrow move player to the right
         if keys[pygame.K_RIGHT] and self.can_move("right"):
-            self.set_x(self.get_x + 2)
+            self.set_x(self.get_x + self.speed)
 
         for bullet in self.bullets:
             bullet_collision = self.enemy_hit(enemies, bullet)

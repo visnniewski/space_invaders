@@ -8,3 +8,9 @@ class menu(object):
 
     def draw(self):
         pass
+
+class button(object):
+    def __init__(self, winodw, position, size):
+        self.window = winodw
+        self.position = position
+        self.size = size

@@ -1,5 +1,6 @@
 from entities.player import player
 from entities.enemy import enemy
+from random import randint
 
 class game(object):
     def __init__(self, window, window_size):
@@ -39,4 +40,7 @@ class game(object):
         start_y = 50
         for i in range(0, 10):
             for j in range(0, 6):
-                self.enemies.append(enemy(self.window, [start_x + 42 * i, start_y + 42 * j], [30, 30]))
+                self.enemies.append(enemy(self.window, self.window_size, [start_x + 42 * i, start_y + 42 * j], [30, 30]))
+
+    def enemy_shoot(self):
+        self.enemies[randint(0, len(self.enemies) - 1)].shoot()
