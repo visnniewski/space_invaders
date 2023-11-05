@@ -12,7 +12,7 @@ class space_invaders:
         pygame.display.set_caption("Space Invaders")
 
         #init player
-        self.player = player(self.window, [0, 0], [30, 30])
+        self.player = player(self.window, self.window_size, [0, 0], [30, 30])
         self.enemies = []
         self.create_enemies_fleet()
         
@@ -25,7 +25,9 @@ class space_invaders:
     def game_loop(self):
         #init pygame clock
         clock = pygame.time.Clock()
-
+        pygame.time.set_timer(pygame.USEREVENT + 1, 500)
+        can_shoot = True
+        timer_event = pygame.USEREVENT + 1
         #start game loop
         while self.running:
             #look for events in pygame
@@ -34,10 +36,13 @@ class space_invaders:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     self.running = False
+                elif event.type == timer_event and can_shoot == False:
+                    can_shoot = True
                 #shoot bullet (its not in player class because i could get key up only here)
-                if event.type == pygame.KEYUP:
+                elif event.type == pygame.KEYUP and can_shoot:
                     if event.key == pygame.K_SPACE:
                         self.player.shoot([self.player.get_x, self.player.get_y])
+                        can_shoot = False
 
             #if statement to remove lag when closing window
             if self.running != False:

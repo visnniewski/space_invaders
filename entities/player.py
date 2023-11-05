@@ -3,15 +3,16 @@ from .bullet import bullet
 import pygame
 
 class player(entity):
-    def __init__(self, window, position, size):
+    def __init__(self, window, window_size, position, size):
         super().__init__(position, size)
         self.window = window
+        self.window_size = window_size
         self.bullets = []
         self.enemies_destroyed = []
 
     def shoot(self, player_position):
         #shoot bullets
-        self.bullets.append(bullet(self.window, player_position, (4, self.get_height/2), self.get_width))
+        self.bullets.append(bullet(self.window, self.window_size, player_position, (4, self.get_height/2), self.get_width))
 
     def update(self, enemies):
         #get pygame pressed keys

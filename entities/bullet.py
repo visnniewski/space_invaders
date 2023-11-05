@@ -2,10 +2,11 @@ import pygame
 from .entity import entity
 
 class bullet(entity):
-    def __init__(self, window, position, size, player_width):
+    def __init__(self, window, window_size, position, size, player_width):
         super().__init__(position, size)
 
         self.window = window
+        self.window_size = window_size
 
         #center to player width
         self.set_x(self.get_x + player_width / 2 - self.get_width / 2)
@@ -21,6 +22,6 @@ class bullet(entity):
     #return True if bullet is out of window
     @property
     def out_of_window(self):
-        if self.get_y + self.get_height <= 0:
+        if self.get_y + self.get_height <= 0 or self.get_y >= self.window_size[1]:
             return True
         return False
