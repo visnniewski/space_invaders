@@ -11,7 +11,7 @@ class player(entity):
 
     def shoot(self, player_position):
         #shoot bullets
-        self.bullets.append(bullet(self.window, player_position, (6, self.get_height/2), self.get_width))
+        self.bullets.append(bullet(self.window, player_position, (4, self.get_height/2), self.get_width))
 
     def update(self, enemies):
         #get pygame pressed keys

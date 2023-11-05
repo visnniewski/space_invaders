@@ -70,11 +70,12 @@ class space_invaders:
         pygame.display.update()
 
     def create_enemies_fleet(self):
-        start_x = 36
+        start_x = 66
         for i in range(0, 10):
-            self.enemies.append(enemy(self.window, [start_x + 42 * i, 20], [30, 30]))
+            for j in range(0, 6):
+                self.enemies.append(enemy(self.window, [start_x + 42 * i, 20 + 42 * j], [30, 30]))
 
 if __name__ == "__main__":
-    game = space_invaders((480, 360))
+    game = space_invaders((540, 600))
     game.game_loop()
     

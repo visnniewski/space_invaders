@@ -13,7 +13,7 @@ class bullet(entity):
 
     def update(self):
         #move bullet up
-        self.set_y(self.get_y - 4)
+        self.set_y(self.get_y - 8)
 
     def draw(self):
         pygame.draw.rect(self.window, (46, 204, 113), self.rect)
