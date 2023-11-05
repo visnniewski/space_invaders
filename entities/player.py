@@ -10,19 +10,19 @@ class player(entity):
         self.bullets = []
         self.enemies_destroyed = []
 
-    def shoot(self, player_position):
+    def shoot(self):
         #shoot bullets
-        self.bullets.append(bullet(self.window, self.window_size, player_position, (4, self.get_height/2), self.get_width))
+        self.bullets.append(bullet(self.window, self.window_size, (self.get_x, self.get_y), (4, self.get_height/2), self.get_width))
 
     def update(self, enemies):
         #get pygame pressed keys
         keys = pygame.key.get_pressed()
 
         #if key pressed left arrow move player to the left
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] and self.can_move("left"):
             self.set_x(self.get_x - 2)
         #if key pressed right arrow move player to the right
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and self.can_move("right"):
             self.set_x(self.get_x + 2)
 
         for bullet in self.bullets:
@@ -42,7 +42,18 @@ class player(entity):
             bullet.draw()
         pygame.draw.rect(self.window, (255, 255, 255), self.rect)
 
-    
+    def can_move(self, dir):
+        if dir == "right":
+            if self.get_x + self.get_width >= self.window_size[0]:
+                self.set_x(self.window_size[0] - self.get_width)
+                return False
+        elif dir == "left":
+            if self.get_x <= 0:
+                self.set_x(0)
+                return False
+        
+        return True
+
     def enemy_hit(self, enemies, bullet):
         result = []
         for enemy in enemies:

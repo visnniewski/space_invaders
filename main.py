@@ -1,6 +1,7 @@
 import pygame, sys
-from entities.player import player
-from entities.enemy import enemy
+# from entities.player import player
+# from entities.enemy import enemy
+from scenes.scene_manager import scene_manager
 
 class space_invaders:
     def __init__(self, window_size):
@@ -11,14 +12,7 @@ class space_invaders:
         self.window = pygame.display.set_mode(window_size)
         pygame.display.set_caption("Space Invaders")
 
-        #init player
-        self.player = player(self.window, self.window_size, [0, 0], [30, 30])
-        self.enemies = []
-        self.create_enemies_fleet()
-        
-        #set player position
-        self.player.set_x(self.window_size[0] / 2 - self.player.get_width / 2)
-        self.player.set_y(self.window_size[1] - self.player.get_height * 3)
+        self.scene_manager = scene_manager(self.window, self.window_size)
 
         self.running = True
 
@@ -40,8 +34,8 @@ class space_invaders:
                     can_shoot = True
                 #shoot bullet (its not in player class because i could get key up only here)
                 elif event.type == pygame.KEYUP and can_shoot:
-                    if event.key == pygame.K_SPACE:
-                        self.player.shoot([self.player.get_x, self.player.get_y])
+                    if event.key == pygame.K_SPACE and self.scene_manager.get_scene_name == "game":
+                        self.scene_manager.scene.player.shoot()
                         can_shoot = False
 
             #if statement to remove lag when closing window
@@ -53,34 +47,16 @@ class space_invaders:
         sys.exit()
 
     def update(self):
-        self.player.update(self.enemies)
-
-        #remove dead enemy from game
-        for enemy_destroyed in self.player.enemies_destroyed:
-            self.enemies.remove(enemy_destroyed)
-            self.player.enemies_destroyed.remove(enemy_destroyed)
-
-        #update all enemies
-        for enemy in self.enemies:
-            enemy.update()
+        self.scene_manager.update()
 
     def draw(self):
         self.window.fill((0, 0, 0), (0, 0, self.window_size[0], self.window_size[1]))
-        self.player.draw()
 
-        #draw all enemies
-        for enemy in self.enemies:
-            enemy.draw()
+        self.scene_manager.draw()
 
         pygame.display.update()
 
-    def create_enemies_fleet(self):
-        start_x = 66
-        for i in range(0, 10):
-            for j in range(0, 6):
-                self.enemies.append(enemy(self.window, [start_x + 42 * i, 20 + 42 * j], [30, 30]))
-
 if __name__ == "__main__":
-    game = space_invaders((540, 600))
+    game = space_invaders((580, 700))
     game.game_loop()
     
