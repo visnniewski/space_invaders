@@ -22,8 +22,10 @@ class space_invaders:
         
         player_shoot = pygame.USEREVENT + 1
         enemy_shoot = pygame.USEREVENT + 2
+        enemy_move = pygame.USEREVENT + 3
         pygame.time.set_timer(player_shoot, 500)
         pygame.time.set_timer(enemy_shoot, 2000)
+        pygame.time.set_timer(enemy_move, 1500)
         can_shoot = True
     
         #start game loop
@@ -41,8 +43,11 @@ class space_invaders:
                     if event.key == pygame.K_SPACE and self.scene_manager.get_scene_name == "game":
                         self.scene_manager.scene.player.shoot()
                         can_shoot = False
-                if event.type == enemy_shoot and self.scene_manager.get_scene_name == "game":
-                    self.scene_manager.scene.enemy_shoot()
+                if self.scene_manager.get_scene_name == "game":
+                    if event.type == enemy_shoot:
+                        self.scene_manager.scene.enemy_shoot()
+                    if event.type == enemy_move:
+                        self.scene_manager.scene.enemy_move()
                 if self.scene_manager.get_scene_name == "menu":
                     if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
                         self.scene_manager.scene.clicked = True

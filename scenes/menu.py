@@ -18,7 +18,7 @@ class menu(object):
 
         for button in self.buttons:
             button.hover(m_pos)
-            if self.clicked and button.text == "Start":
+            if self.clicked and button.text == "Start" and button.hovered:
                 self.scene = "game"
 
     def draw(self):

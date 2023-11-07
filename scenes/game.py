@@ -13,6 +13,7 @@ class game(object):
         self.player = player(self.window, self.window_size, [0, 0], [30, 30])
         self.enemies = []
         self.create_enemies_fleet()
+        self.enemy_dir = 1
 
         #set player position
         self.player.set_x(self.window_size[0] / 2 - self.player.get_width / 2)
@@ -45,4 +46,23 @@ class game(object):
                 self.enemies.append(enemy(self.window, self.window_size, [start_x + 42 * i, start_y + 42 * j], [30, 30]))
 
     def enemy_shoot(self):
-        self.enemies[randint(0, len(self.enemies) - 1)].shoot()
+        if self.enemies:
+            self.enemies[randint(0, len(self.enemies) - 1)].shoot()
+
+    def enemy_move(self):
+        move_down = False
+        for enemy in self.enemies:
+            if enemy.get_x + enemy.get_width >= self.window_size[0] - 30:
+                self.enemy_dir = -1
+                move_down = True
+            if enemy.get_x <= 30:
+                self.enemy_dir = 1
+                move_down = True
+
+        if move_down:
+            for enemy in self.enemies:
+                enemy.set_y(enemy.get_y + 8)
+        for enemy in self.enemies:
+            enemy.set_x(enemy.get_x + 10 * self.enemy_dir)
+            
+        move_down = False
